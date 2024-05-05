@@ -17,21 +17,23 @@ int main () {
   } fprintf(stdout, "\n\n");
 
   /// [5, 2, 7, 10, 1]
-  /// 1. [2, 5, 7, 10, 1]
-  /// 2. [2, 5, 7, 10, 1]
-  /// 3. [2, 5, 7, 10, 1]
+  /// 1. [1, 2, 7, 10, 5]
+  /// 2. [1, 2, 7, 10, 5]
+  /// 3. [1, 2, 5, 10, 7]
   /// 4. [1, 2, 5, 7, 10]
 
-  int64_t key = 0;
-  int64_t j = 0;
-  for (int64_t i = 1; i < size; i++) {
-    key = arr_to_order[i];
-    j = i - 1;
-    while (j >= 0 && arr_to_order[j] > key) {
-      arr_to_order[j + 1] = arr_to_order[j];
-      j = j - 1;
+  int64_t min = 0;
+  int64_t temp = 0;
+  for (int64_t i = 0; i < size; i++) {
+    min = i;
+    for (int64_t j = i + 1; j < size; j++) {
+      if (arr_to_order[j] < arr_to_order[min]) {
+        min = j;
+      }
     }
-    arr_to_order[j + 1] = key;
+    temp = arr_to_order[i];
+    arr_to_order[i] = arr_to_order[min];
+    arr_to_order[min] = temp;
   }
 
   for (int64_t i = 0; i < size; i++) { 
